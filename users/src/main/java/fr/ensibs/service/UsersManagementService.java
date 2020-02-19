@@ -1,6 +1,6 @@
 package fr.ensibs.service;
 
-import fr.ensibs.entity.User;
+import fr.ensibs.models.User;
 import fr.ensibs.util.Role;
 
 import java.util.List;

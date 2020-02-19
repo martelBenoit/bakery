@@ -1,7 +1,8 @@
-package fr.ensibs.entity;
+package fr.ensibs.models;
 
 import fr.ensibs.util.Role;
 
+@Entity
 public class User {
 
     private int id;
@@ -13,6 +14,14 @@ public class User {
     private String token;
 
     private Role role;
+
+    public User(int id, String name, String password, String token, Role role){
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.token = token;
+        this.role = role;
+    }
 
     public User(String name, String password, Role role){
         this.name = name;

@@ -1,17 +1,18 @@
 package service;
 
-import entity.User;
+
+import fr.ensibs.entity.User;
+import util.Role;
 
 import java.util.List;
 
 public interface UsersManagementService {
 
-    List<User> getUsers();
+   public User register(String name, String password, Role role);
 
-    boolean addUser(User user);
+   public boolean unregister(User user);
 
-    boolean removeUser(int idUser);
-
+   public List<User> getUsers();
 
 
 }

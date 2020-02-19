@@ -2,9 +2,11 @@ package fr.ensibs.service;
 
 
 
-import fr.ensibs.entity.Order;
+import fr.ensibs.dao.OrderDAO;
+import fr.ensibs.models.Order;
 
 import javax.jws.WebService;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +15,34 @@ import java.util.List;
 public class OrdersManagementServiceImpl implements OrdersManagementService {
 
 
-    public Order add(String nom) {
-        return null;
+    public void add(String userName, float price) {
+        try {
+            OrderDAO dao = new OrderDAO();
+            dao.addOrder(new Order(0, userName, price));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Gets the orders from a specified user
      *
-     * @param id The id of the user to get orders
+     * @param userName The name of the user to get orders
+     * @param userToken The token corresponding to the userId
      * @return The list of the user's orders
      */
-    public List<Order> getOrders(int id) {
-        return new ArrayList<Order>();
+    public List<Order> getOrders(String userName, String userToken) {
+        List<Order> ret = new ArrayList<Order>();
+        try {
+            OrderDAO dao = new OrderDAO();
+            ret = dao.getOrders(userName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    public void printMenu() {
+        System.out.println("oui");
     }
 }

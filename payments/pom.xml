@@ -34,6 +34,26 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <version>2.3.3-b01</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>fr.ensibs.service</packageName>
+                            <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
+                            <keep>true</keep>
+                            <wsdlUrls>
+                                <wsdlUrl>http://localhost:9993/ws/OrdersManagementService?wsdl</wsdlUrl>
+                            </wsdlUrls>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

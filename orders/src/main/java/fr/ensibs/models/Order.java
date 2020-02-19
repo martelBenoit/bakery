@@ -12,11 +12,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, String userName, float price) {
+    public Order(int id, String userName, float price, boolean paid) {
         this.id = id;
         this.userName = userName;
         this.price = price;
-        this.paid = false;
+        this.paid = paid;
     }
 
     public int getId() {

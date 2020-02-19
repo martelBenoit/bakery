@@ -24,7 +24,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
             for(String product : products) {
                 totalPrice += getMenu().get(product);
             }
-            dao.addOrder(new Order(0, userName, totalPrice));
+            dao.addOrder(new Order(0, userName, totalPrice, false));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,15 +33,14 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
     /**
      * Gets the orders from a specified user
      *
-     * @param userName The name of the user to get orders
-     * @param userToken The token corresponding to the userId
+     * @param login The name of the user to get orders
      * @return The list of the user's orders
      */
-    public List<Order> getOrders(String userName, String userToken) {
+    public List<Order> getOrders(String login) {
         List<Order> ret = new ArrayList<>();
         try {
             OrderDAO dao = new OrderDAO();
-            ret = dao.getOrders(userName);
+            ret = dao.getOrders(login);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,5 +53,10 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
         menu.put("Croissant", 0.8f);
         menu.put("Pain aux raisins", 1f);
         return menu;
+    }
+
+    public void setPaid(int id) {
+        OrderDAO dao = new OrderDAO();
+        dao.setPaid(id);
     }
 }

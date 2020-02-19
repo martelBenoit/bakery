@@ -11,9 +11,11 @@ public interface OrdersManagementService {
 
    void addOrder(String userName, List<String> products);
 
-   List<Order> getOrders(String userName, String userToken);
+   List<Order> getOrders(String login);
 
    Map<String, Float> getMenu();
+
+   void setPaid(int id);
 
 
 }

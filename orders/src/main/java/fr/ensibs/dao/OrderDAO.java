@@ -23,9 +23,7 @@ public class OrderDAO {
         preparedStatement.setFloat(2,order.getPrice());
         preparedStatement.setBoolean(3,order.isPaid());
         int res = preparedStatement.executeUpdate();
-        // TODO : récupérer et retourner id
         return res == 1;
-
     }
 
     public List<Order> getOrders(String userName) throws SQLException {
@@ -39,13 +37,25 @@ public class OrderDAO {
             orders.add(new Order(
                     res.getInt("id"),
                     res.getString("userName"),
-                    res.getFloat("price")
+                    res.getFloat("price"),
+                    res.getBoolean("paid")
                     )
             );
         }
 
         return orders;
 
+    }
+
+    public void setPaid(int id) {
+        try {
+            String query = "UPDATE Order set paid = true WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, String.valueOf(id));
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

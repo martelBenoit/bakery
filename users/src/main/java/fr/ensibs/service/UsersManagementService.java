@@ -1,8 +1,7 @@
-package service;
-
+package fr.ensibs.service;
 
 import fr.ensibs.entity.User;
-import util.Role;
+import fr.ensibs.util.Role;
 
 import java.util.List;
 
@@ -13,6 +12,8 @@ public interface UsersManagementService {
    public boolean unregister(User user);
 
    public List<User> getUsers();
+
+
 
 
 }

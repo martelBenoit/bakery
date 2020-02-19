@@ -1,8 +1,8 @@
 package fr.ensibs.util;
 
 public enum Role {
-    Admin(1),
-    Customer(0);
+    admin(1),
+    customer(0);
 
     public int getId() {
         return id;

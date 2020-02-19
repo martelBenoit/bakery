@@ -1,7 +1,7 @@
 package fr.ensibs.service;
 
 import fr.ensibs.models.User;
-import fr.ensibs.util.Role;
+
 
 import javax.jws.WebService;
 import java.util.List;
@@ -9,15 +9,18 @@ import java.util.List;
 @WebService
 public interface UsersManagementService {
 
-   public User register(String name, String password, Role role);
 
-   public boolean unregister(int id, String token);
+   User register(String name, String password, String role);
 
-   public List<User> getUsers(String token);
+   boolean unregister(int id, String token);
 
-   public String authentification(String name, String password);
+   List<User> getUsers(String token);
 
-   public boolean deconnection(int id, String token);
+   String authentification(String name, String password);
+
+   boolean deconnection(String token);
+
+   User getUserFromToken(String token);
 
 
 

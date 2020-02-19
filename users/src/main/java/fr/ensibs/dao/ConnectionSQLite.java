@@ -1,5 +1,6 @@
 package fr.ensibs.dao;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,19 +10,21 @@ public class ConnectionSQLite {
 
     private static Connection connection = null;
     private Statement statement = null;
-    private String url = "D:/Benoit/Documents/Dropbox/ENSIBS/SEMESTRE_4/Architectures_Orientés_services/bakery/users/src/main/resources/bdd.db";
+
+    private String url = "bdd.db";
 
     private ConnectionSQLite() {
+
+        URL url = ConnectionSQLite.class.getResource("/bdd.db");
+        this.url = url.getPath()+"\\"+url.getFile();
+
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + url);
             statement = connection.createStatement();
             System.out.println("Connection at " + url + " successful");
-        } catch (ClassNotFoundException notFoundException) {
+        } catch (ClassNotFoundException | SQLException notFoundException) {
             notFoundException.printStackTrace();
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-
         }
 
     }

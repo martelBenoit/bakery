@@ -3,6 +3,7 @@ package fr.ensibs.service;
 import fr.ensibs.models.User;
 
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public interface UsersManagementService {
 
 
-   User register(String name, String password, String role);
+   User register(@WebParam(name="login") String login, @WebParam(name="password") String password, @WebParam(name="role") String role);
 
    boolean unregister(int id, String token);
 

@@ -12,7 +12,6 @@
         <module>users</module>
         <module>payment</module>
         <module>orders</module>
-        <module>bdd</module>
     </modules>
 
 

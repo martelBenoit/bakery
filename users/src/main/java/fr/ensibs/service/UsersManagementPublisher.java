@@ -4,6 +4,6 @@ import javax.xml.ws.Endpoint;
 
 public class UsersManagementPublisher {
     public static void main(String[] args) {
-        Endpoint.publish("http://localhost:9991/ws/usermanagementservice", new UsersManagementServiceImpl());
+        Endpoint.publish("http://localhost:9991/ws/UsersManagementService", new UsersManagementServiceImpl());
     }
 }

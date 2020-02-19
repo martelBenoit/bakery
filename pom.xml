@@ -8,11 +8,25 @@
     <artifactId>bakery</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
+
     <modules>
         <module>users</module>
-        <module>payment</module>
+        <module>payments</module>
         <module>orders</module>
     </modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.3.3-b01</version>
+        </dependency>
+    </dependencies>
 
 </project>

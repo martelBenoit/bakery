@@ -16,18 +16,18 @@
             <plugin>
                 <groupId>com.sun.xml.ws</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
-                <version>${jaxws.version}</version>
+                <version>2.3.3-b01</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <packageName>fr.mickaelbaron.jaxwstutorialexercice2</packageName>
+                            <packageName>fr.ensibs.service</packageName>
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
                             <keep>true</keep>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:9991/ws/usersmanagementservice?wsdl</wsdlUrl>
+                                <wsdlUrl>http://localhost:9991/ws/UsersManagementService?wsdl</wsdlUrl>
                             </wsdlUrls>
                         </configuration>
                     </execution>
@@ -35,6 +35,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

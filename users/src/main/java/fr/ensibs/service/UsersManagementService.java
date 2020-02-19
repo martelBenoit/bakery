@@ -9,9 +9,13 @@ public interface UsersManagementService {
 
    public User register(String name, String password, Role role);
 
-   public boolean unregister(User user);
+   public boolean unregister(User user, String token);
 
-   public List<User> getUsers();
+   public List<User> getUsers(String token);
+
+   public String authentification(String name, String password);
+
+   public boolean deconnection(int id, String token);
 
 
 

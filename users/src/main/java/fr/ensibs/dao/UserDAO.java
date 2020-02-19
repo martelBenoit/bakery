@@ -18,15 +18,21 @@ public class UserDAO {
     }
 
 
-    public boolean addUser(User user) throws SQLException {
+    public User addUser(User user) throws SQLException {
         String query = "INSERT INTO User(name,password,role) VALUES (?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1,user.getName());
         preparedStatement.setString(2,user.getPassword());
         preparedStatement.setInt(3,user.getRole().ordinal());
         int res = preparedStatement.executeUpdate();
 
-        return res == 1;
+        if(res == 1){
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            rs.next();
+            user.setId(rs.getInt(1));
+        }
+
+        return user;
 
     }
 

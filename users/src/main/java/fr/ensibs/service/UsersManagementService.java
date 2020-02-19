@@ -3,8 +3,10 @@ package fr.ensibs.service;
 import fr.ensibs.models.User;
 import fr.ensibs.util.Role;
 
+import javax.jws.WebService;
 import java.util.List;
 
+@WebService
 public interface UsersManagementService {
 
    public User register(String name, String password, Role role);

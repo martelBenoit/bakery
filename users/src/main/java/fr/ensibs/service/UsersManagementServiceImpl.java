@@ -2,19 +2,30 @@ package fr.ensibs.service;
 
 
 
+import fr.ensibs.dao.UserDAO;
 import fr.ensibs.models.User;
 import fr.ensibs.util.Role;
 
 import javax.jws.WebService;
+import java.sql.SQLException;
 import java.util.List;
 
 
 @WebService(endpointInterface = "fr.ensibs.service.UsersManagementService",serviceName = "UsersManagementService",portName = "UsersManagementPort")
 public class UsersManagementServiceImpl implements UsersManagementService {
 
+    UserDAO userDAO = new UserDAO();
 
     public User register(String name, String password, Role role) {
-        return null;
+        User user = new User(name,password,role);
+        try{
+            user = userDAO.addUser(user);
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return user;
     }
 
     public boolean unregister(int id, String token) {

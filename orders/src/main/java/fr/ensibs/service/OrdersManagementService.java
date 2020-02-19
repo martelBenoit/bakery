@@ -1,16 +1,21 @@
 package fr.ensibs.service;
 
-import fr.ensibs.entity.Order;
+import fr.ensibs.models.Order;
 
 import javax.jws.WebService;
 import java.util.List;
+import java.util.Map;
 
 @WebService(name = "OrdersManagementService", targetNamespace = "http://fr.ensibs")
 public interface OrdersManagementService {
 
-   Order add(String nom /* etc.. */);
+   void addOrder(String userName, List<String> products);
 
-   List<Order> getOrders(int id);
+   List<Order> getOrders(String login);
+
+   Map<String, Float> getMenu();
+
+   void setPaid(int id);
 
 
 }

@@ -37,22 +37,21 @@ public class User {
 
     /**
      * Empty constructor.
-     *
      */
-    public User(){
+    public User() {
 
     }
 
     /**
      * Constructor of the user class with all parameters.
      *
-     * @param id the user id
-     * @param login the user login
+     * @param id       the user id
+     * @param login    the user login
      * @param password the user password
-     * @param token the user token
-     * @param role the user role
+     * @param token    the user token
+     * @param role     the user role
      */
-    public User(int id, String login, String password, String token, Role role){
+    public User(int id, String login, String password, String token, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -63,11 +62,11 @@ public class User {
     /**
      * Constructor of the user class with onlu login, password and role parameters.
      *
-     * @param login the user login
+     * @param login    the user login
      * @param password the user password
-     * @param role the user role
+     * @param role     the user role
      */
-    public User(String login, String password, Role role){
+    public User(String login, String password, Role role) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -150,7 +149,7 @@ public class User {
      *
      * @param role the role
      */
-    public void setRole(Role role){
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -159,7 +158,7 @@ public class User {
      *
      * @return the role
      */
-    public Role getRole(){
+    public Role getRole() {
         return this.role;
     }
 }

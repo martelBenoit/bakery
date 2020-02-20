@@ -2,7 +2,10 @@ package fr.ensibs.dao;
 
 import fr.ensibs.model.Order;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,7 @@ public class OrderDAO {
 
     private Connection connection;
 
-    public OrderDAO(){
+    public OrderDAO() {
 
         this.connection = ConnectionSQLite.getConnection();
     }
@@ -19,9 +22,9 @@ public class OrderDAO {
     public boolean addOrder(Order order) throws SQLException {
         String query = "INSERT INTO OOrder(login_user,price,isPaid) VALUES (?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1,order.getUserName());
-        preparedStatement.setFloat(2,order.getPrice());
-        preparedStatement.setBoolean(3,order.isPaid());
+        preparedStatement.setString(1, order.getUserName());
+        preparedStatement.setFloat(2, order.getPrice());
+        preparedStatement.setBoolean(3, order.isPaid());
         int res = preparedStatement.executeUpdate();
         return res == 1;
     }
@@ -29,16 +32,16 @@ public class OrderDAO {
     public List<Order> getOrders(String userName) throws SQLException {
         String query = "SELECT id, login_user, price, isPaid FROM OOrder WHERE login_user = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1,userName);
+        preparedStatement.setString(1, userName);
         ResultSet res = preparedStatement.executeQuery();
 
         List<Order> orders = new ArrayList<>();
-        while(res.next()){
+        while (res.next()) {
             orders.add(new Order(
-                    res.getInt("id"),
-                    res.getString("login_user"),
-                    res.getFloat("price"),
-                    res.getBoolean("isPaid")
+                            res.getInt("id"),
+                            res.getString("login_user"),
+                            res.getFloat("price"),
+                            res.getBoolean("isPaid")
                     )
             );
         }
@@ -53,7 +56,7 @@ public class OrderDAO {
         ResultSet res = preparedStatement.executeQuery(query);
 
         List<Order> orders = new ArrayList<>();
-        while(res.next()){
+        while (res.next()) {
             orders.add(new Order(
                             res.getInt("id"),
                             res.getString("userName"),

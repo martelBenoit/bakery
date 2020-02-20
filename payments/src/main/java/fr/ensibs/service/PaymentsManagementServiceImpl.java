@@ -1,5 +1,7 @@
 package fr.ensibs.service;
 
+import fr.ensibs.database.dao.OrderDAO;
+
 import javax.jws.WebService;
 
 @WebService(endpointInterface = "fr.ensibs.service.PaymentsManagementService", serviceName = "PaymentsManagementService", portName = "PaymentsManagementPort")
@@ -14,19 +16,19 @@ public class PaymentsManagementServiceImpl implements PaymentsManagementService 
      * Constructor
      */
     public PaymentsManagementServiceImpl() {
-
+        OrdersManagementServiceImpl ordersManagementService;
     }
 
     /**
      * Used when the user pays all his orders
      *
-     * @param id    the user id
-     * @param token the user token
+     * @param login the user login
      */
-    public void pay(int id, String token) {
-        List<Order> orders = getOrders(id, token);
+    public void pay(String login) {
+        List<Order> orders = ordersManagementService.getOrders(login);
         for (Order order : orders) {
-            order.setPaid(true);
+            OrderDAO dao = new OrderDAO();
+            dao.setPaid(order.getId());
         }
         this.price = 0;
     }
@@ -34,11 +36,10 @@ public class PaymentsManagementServiceImpl implements PaymentsManagementService 
     /**
      * Used when the user requests his bill
      *
-     * @param id    the user id
-     * @param token the user token
+     * @param login the user login
      */
-    public void getBill(int id, String token) {
-        List<Order> orders = getOrders(id, token);
+    public void getBill(String login) {
+        List<Order> orders = ordersManagementService.getOrders(login);
         for (Order order : orders) {
             if (!order.isPaid()) {
                 this.price = this.price + order.getPrice();

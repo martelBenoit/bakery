@@ -27,7 +27,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
             if (user != null) {
                 OrderDAO dao = new OrderDAO();
                 float totalPrice = 0;
-                if(products != null) {
+                if (products != null) {
                     for (String product : products) {
                         float price = getPriceOf(product);
                         // If the product exists
@@ -62,8 +62,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
                     e.printStackTrace();
                 }
             }
-        }
-        catch (Exception_Exception e){
+        } catch (Exception_Exception e) {
             System.out.println(e.getMessage());
         }
         return ret;
@@ -103,8 +102,8 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
     }
 
     private float getPriceOf(String name) {
-        for(Product p : this.getMenu()) {
-            if(p.getName().equals(name)) {
+        for (Product p : this.getMenu()) {
+            if (p.getName().equals(name)) {
                 return p.getPrice();
             }
         }

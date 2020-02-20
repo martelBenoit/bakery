@@ -23,7 +23,7 @@ public class UserDAO {
     /**
      * Constructor.
      */
-    public UserDAO(){
+    public UserDAO() {
 
         this.connection = ConnectionSQLite.getConnection();
     }
@@ -37,23 +37,22 @@ public class UserDAO {
      */
     public User addUser(User user) throws Exception {
 
-        if(existUser(user.getLogin()) == null ){
+        if (existUser(user.getLogin()) == null) {
             String query = "INSERT INTO User(login,password,role) VALUES (?,?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1,user.getLogin());
-            preparedStatement.setString(2,user.getPassword());
-            preparedStatement.setInt(3,user.getRole().ordinal());
+            PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setInt(3, user.getRole().ordinal());
             int res = preparedStatement.executeUpdate();
 
-            if(res == 1){
+            if (res == 1) {
                 ResultSet rs = preparedStatement.getGeneratedKeys();
                 rs.next();
                 user.setId(rs.getInt(1));
             }
 
             return user;
-        }
-        else{
+        } else {
             throw new Exception("This user already exist !");
         }
 
@@ -70,14 +69,13 @@ public class UserDAO {
     public User existUser(String login) throws SQLException {
         String query = "SELECT id, login, password, token, role FROM User WHERE login = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1,login);
+        preparedStatement.setString(1, login);
         ResultSet res = preparedStatement.executeQuery();
 
 
-        if (!res.next()){
+        if (!res.next()) {
             return null;
-        }
-        else {
+        } else {
             User user = new User();
             user.setId(res.getInt("id"));
             user.setLogin(res.getString("login"));
@@ -93,7 +91,7 @@ public class UserDAO {
     /**
      * This method allows you to get an user from his login and his password.
      *
-     * @param login the login of the user
+     * @param login    the login of the user
      * @param password the password of the user
      * @return user if the user is retrieved, else null
      * @throws SQLException throw an SQLException if an exception was occurred
@@ -101,15 +99,14 @@ public class UserDAO {
     public User getUser(String login, String password) throws SQLException {
         String query = "SELECT id, login, password, token, role FROM User WHERE login = ? and password = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1,login);
-        preparedStatement.setString(2,password);
+        preparedStatement.setString(1, login);
+        preparedStatement.setString(2, password);
         ResultSet res = preparedStatement.executeQuery();
 
 
-        if (!res.next()){
+        if (!res.next()) {
             return null;
-        }
-        else {
+        } else {
             User user = new User();
             user.setId(res.getInt("id"));
             user.setLogin(res.getString("login"));
@@ -134,13 +131,13 @@ public class UserDAO {
         ResultSet res = statement.executeQuery(query);
 
         List<User> users = new ArrayList<User>();
-        while(res.next()){
+        while (res.next()) {
             users.add(new User(
-                    res.getInt("id"),
-                    res.getString("name"),
-                    res.getString("password"),
-                    res.getString("token"),
-                    Role.of(res.getInt("role"))
+                            res.getInt("id"),
+                            res.getString("name"),
+                            res.getString("password"),
+                            res.getString("token"),
+                            Role.of(res.getInt("role"))
                     )
             );
         }
@@ -159,8 +156,8 @@ public class UserDAO {
     public boolean updateUser(User user) throws SQLException {
         String query = "UPDATE User set token = ? where id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1,user.getToken());
-        preparedStatement.setInt(2,user.getId());
+        preparedStatement.setString(1, user.getToken());
+        preparedStatement.setInt(2, user.getId());
         int res = preparedStatement.executeUpdate();
 
         return res == 1;
@@ -176,14 +173,13 @@ public class UserDAO {
     public User getUser(String token) throws SQLException {
         String query = "SELECT id, login, password, token, role FROM User WHERE token = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1,token);
+        preparedStatement.setString(1, token);
         ResultSet res = preparedStatement.executeQuery();
 
 
-        if (!res.next()){
+        if (!res.next()) {
             return null;
-        }
-        else {
+        } else {
             User user = new User();
             user.setId(res.getInt("id"));
             user.setLogin(res.getString("login"));

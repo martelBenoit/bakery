@@ -16,7 +16,7 @@ import java.util.UUID;
  * @version 1.0
  * @see UsersManagementService
  */
-@WebService(endpointInterface = "fr.ensibs.service.UsersManagementService",serviceName = "UsersManagementService",portName = "UsersManagementPort")
+@WebService(endpointInterface = "fr.ensibs.service.UsersManagementService", serviceName = "UsersManagementService", portName = "UsersManagementPort")
 public class UsersManagementServiceImpl implements UsersManagementService {
 
     /**
@@ -32,14 +32,14 @@ public class UsersManagementServiceImpl implements UsersManagementService {
 
         Role role;
 
-        if(roleString.equalsIgnoreCase("admin"))
+        if (roleString.equalsIgnoreCase("admin"))
             role = Role.admin;
-        else if(roleString.equalsIgnoreCase("customer"))
+        else if (roleString.equalsIgnoreCase("customer"))
             role = Role.customer;
         else
             throw new Exception("The role not exist, please enter a valid role (`admin` or `customer`");
 
-        User user = new User(login,password,role);
+        User user = new User(login, password, role);
         user = userDAO.addUser(user);
         return user;
 
@@ -57,16 +57,15 @@ public class UsersManagementServiceImpl implements UsersManagementService {
      * {@inheritDoc}
      */
     @Override
-    public List<User> getUsers(String token) throws Exception{
+    public List<User> getUsers(String token) throws Exception {
         User user = getUserFromToken(token);
-        if(user != null && user.getRole() == Role.admin){
-            try{
+        if (user != null && user.getRole() == Role.admin) {
+            try {
                 return userDAO.getUsers();
-            }catch (SQLException e){
-               throw new Exception("Error when searching for users in the database");
+            } catch (SQLException e) {
+                throw new Exception("Error when searching for users in the database");
             }
-        }
-        else
+        } else
             throw new Exception("Your token is invalid for this command !");
     }
 
@@ -76,11 +75,11 @@ public class UsersManagementServiceImpl implements UsersManagementService {
     @Override
     public String auth(String login, String password) throws Exception {
 
-        User user = userDAO.getUser(login,password);
-        if(user == null)
+        User user = userDAO.getUser(login, password);
+        if (user == null)
             throw new Exception("Invalid login or password");
 
-        user.setToken("USR-"+UUID.randomUUID().toString());
+        user.setToken("USR-" + UUID.randomUUID().toString());
         userDAO.updateUser(user);
         return user.getToken();
 
@@ -93,7 +92,7 @@ public class UsersManagementServiceImpl implements UsersManagementService {
     public boolean disconnect(String token) throws Exception {
 
         User user = getUserFromToken(token);
-        if(user == null)
+        if (user == null)
             throw new Exception("Unable to retrieve the user in database");
 
         user.setToken("");
@@ -108,7 +107,7 @@ public class UsersManagementServiceImpl implements UsersManagementService {
     public User getUserFromToken(String token) throws Exception {
 
         User user = userDAO.getUser(token);
-        if(user == null)
+        if (user == null)
             throw new Exception("The user with this token doesn't exist !");
 
         return user;
@@ -119,16 +118,16 @@ public class UsersManagementServiceImpl implements UsersManagementService {
      * {@inheritDoc}
      */
     @Override
-    public boolean userIsAdmin(String token) throws Exception{
-        try{
+    public boolean userIsAdmin(String token) throws Exception {
+        try {
             User user = userDAO.getUser(token);
-            if(user == null)
+            if (user == null)
                 throw new Exception("The user doesn't exist !");
 
             return user.getRole() == Role.admin;
 
-        }catch (Exception e){
-            throw new Exception("Error when searching in database : "+e.getMessage());
+        } catch (Exception e) {
+            throw new Exception("Error when searching in database : " + e.getMessage());
         }
 
     }

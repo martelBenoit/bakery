@@ -1,6 +1,7 @@
 package fr.ensibs.service;
 
-import fr.ensibs.models.Order;
+import fr.ensibs.database.entity.Order;
+
 
 import javax.jws.WebService;
 import java.util.List;

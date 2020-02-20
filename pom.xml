@@ -13,6 +13,7 @@
         <module>users</module>
         <module>payments</module>
         <module>orders</module>
+        <module>database</module>
     </modules>
 
     <properties>

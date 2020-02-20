@@ -1,10 +1,8 @@
 package fr.ensibs.service;
 
-
-
-import fr.ensibs.dao.UserDAO;
-import fr.ensibs.models.User;
-import fr.ensibs.util.Role;
+import fr.ensibs.database.dao.UserDAO;
+import fr.ensibs.database.entity.User;
+import fr.ensibs.database.util.Role;
 
 import javax.jws.WebService;
 import java.sql.SQLException;

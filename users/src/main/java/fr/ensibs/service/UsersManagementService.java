@@ -1,7 +1,7 @@
 package fr.ensibs.service;
 
-import fr.ensibs.models.User;
 
+import fr.ensibs.database.entity.User;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -24,6 +24,7 @@ public interface UsersManagementService {
    User getUserFromToken(String token);
 
 
+   
 
 
 }

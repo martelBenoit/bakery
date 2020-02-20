@@ -1,9 +1,8 @@
 package fr.ensibs.service;
 
 
-
-import fr.ensibs.dao.OrderDAO;
-import fr.ensibs.models.Order;
+import fr.ensibs.database.dao.OrderDAO;
+import fr.ensibs.database.entity.Order;
 
 import javax.jws.WebService;
 import java.sql.SQLException;

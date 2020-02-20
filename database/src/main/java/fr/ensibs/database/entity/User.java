@@ -1,6 +1,7 @@
-package fr.ensibs.models;
+package fr.ensibs.database.entity;
 
-import fr.ensibs.util.Role;
+
+import fr.ensibs.database.util.Role;
 
 public class User {
 
@@ -72,3 +73,4 @@ public class User {
         return this.role;
     }
 }
+

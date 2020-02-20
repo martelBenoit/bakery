@@ -1,4 +1,4 @@
-package fr.ensibs.dao;
+package fr.ensibs.database.dao;
 
 
 import fr.ensibs.models.User;

@@ -1,4 +1,4 @@
-package fr.ensibs.util;
+package fr.ensibs.database.util;
 
 public enum Role {
     admin(1),

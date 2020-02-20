@@ -1,7 +1,7 @@
-package fr.ensibs.database.dao;
+package fr.ensibs.dao;
 
-import fr.ensibs.database.entity.User;
-import fr.ensibs.database.util.Role;
+import fr.ensibs.model.User;
+import fr.ensibs.util.Role;
 
 import java.sql.*;
 import java.util.ArrayList;

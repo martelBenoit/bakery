@@ -1,4 +1,4 @@
-package fr.ensibs.database.entity;
+package fr.ensibs.model;
 
 public class Order {
     private int id;

@@ -1,6 +1,6 @@
-package fr.ensibs.database.entity;
+package fr.ensibs.model;
 
-import fr.ensibs.database.util.Role;
+import fr.ensibs.util.Role;
 
 /**
  * User class.

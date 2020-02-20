@@ -1,7 +1,6 @@
 package fr.ensibs.service;
 
 import javax.jws.WebService;
-import java.util.List;
 
 @WebService(endpointInterface = "fr.ensibs.service.PaymentsManagementService", serviceName = "PaymentsManagementService", portName = "PaymentsManagementPort")
 public class PaymentsManagementServiceImpl implements PaymentsManagementService {

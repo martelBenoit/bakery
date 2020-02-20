@@ -1,4 +1,4 @@
-package fr.ensibs.database.util;
+package fr.ensibs.util;
 
 /**
  * Role enum.

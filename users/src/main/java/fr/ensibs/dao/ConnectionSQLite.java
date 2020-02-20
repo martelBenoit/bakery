@@ -1,4 +1,4 @@
-package fr.ensibs.database.dao;
+package fr.ensibs.dao;
 
 
 import java.sql.Connection;
@@ -24,7 +24,7 @@ public class ConnectionSQLite {
     /**
      * the url for the database
      */
-    private static String url = ConnectionSQLite.class.getResource("/bdd.db").getPath();
+    private static String url = ConnectionSQLite.class.getResource("/bdd_users.db").getPath();
 
     /**
      * Private constructor.

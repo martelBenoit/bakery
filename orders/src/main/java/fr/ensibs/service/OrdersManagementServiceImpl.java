@@ -1,16 +1,13 @@
 package fr.ensibs.service;
 
-
-import fr.ensibs.database.dao.OrderDAO;
-import fr.ensibs.database.entity.Order;
-import fr.ensibs.database.entity.Product;
+import fr.ensibs.dao.OrderDAO;
+import fr.ensibs.model.Order;
+import fr.ensibs.model.Product;
 
 import javax.jws.WebService;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @WebService(endpointInterface = "fr.ensibs.service.OrdersManagementService", serviceName = "OrdersManagementService", portName = "OrdersManagementPort")
@@ -23,7 +20,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
         usersManagementPort = usersManagementService.getUsersManagementPort();
     }
 
-    public void addOrder(String token, List<String> products) {
+    public boolean addOrder(String token, List<String> products) {
         try {
             // check if the token is correct
             User user = usersManagementPort.getUserFromToken(token);
@@ -39,12 +36,12 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
                         }
                     }
                 }
-                Order order = new Order(0, user.getLogin(), totalPrice, false);
-                dao.addOrder(new Order(0, user.getLogin(), totalPrice, false));
+                return dao.addOrder(new Order(0, user.getLogin(), totalPrice, false));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | Exception_Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**
@@ -55,14 +52,19 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
      */
     public List<Order> getOrders(String token) {
         List<Order> ret = new ArrayList<>();
-        User user = usersManagementPort.getUserFromToken(token);
-        if (user != null) {
-            try {
-                OrderDAO dao = new OrderDAO();
-                ret = dao.getOrders(user.getLogin());
-            } catch (SQLException e) {
-                e.printStackTrace();
+        try {
+            User user = usersManagementPort.getUserFromToken(token);
+            if (user != null) {
+                try {
+                    OrderDAO dao = new OrderDAO();
+                    ret = dao.getOrders(user.getLogin());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+        }
+        catch (Exception_Exception e){
+            System.out.println(e.getMessage());
         }
         return ret;
     }

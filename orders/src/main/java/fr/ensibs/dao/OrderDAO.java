@@ -1,7 +1,6 @@
-package fr.ensibs.database.dao;
+package fr.ensibs.dao;
 
-
-import fr.ensibs.database.entity.Order;
+import fr.ensibs.model.Order;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class OrderDAO {
 
-    private static Connection connection;
+    private Connection connection;
 
     public OrderDAO(){
 
@@ -28,18 +27,18 @@ public class OrderDAO {
     }
 
     public List<Order> getOrders(String userName) throws SQLException {
-        String query = "SELECT id, login_user, price, isPaid FROM Order WHERE login_user = ?";
+        String query = "SELECT id, login_user, price, isPaid FROM OOrder WHERE login_user = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1,userName);
-        ResultSet res = preparedStatement.executeQuery(query);
+        ResultSet res = preparedStatement.executeQuery();
 
         List<Order> orders = new ArrayList<>();
         while(res.next()){
             orders.add(new Order(
                     res.getInt("id"),
-                    res.getString("userName"),
+                    res.getString("login_user"),
                     res.getFloat("price"),
-                    res.getBoolean("paid")
+                    res.getBoolean("isPaid")
                     )
             );
         }
@@ -49,7 +48,7 @@ public class OrderDAO {
     }
 
     public List<Order> getAllOrders() throws SQLException {
-        String query = "SELECT id, userName, price, paid FROM Order";
+        String query = "SELECT id, login_user, price, isPaid FROM OOrder";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet res = preparedStatement.executeQuery(query);
 
@@ -70,7 +69,7 @@ public class OrderDAO {
 
     public void setPaid(int id) {
         try {
-            String query = "UPDATE Order set isPaid = true WHERE id = ?";
+            String query = "UPDATE OOrder set isPaid = true WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, String.valueOf(id));
             preparedStatement.executeUpdate();

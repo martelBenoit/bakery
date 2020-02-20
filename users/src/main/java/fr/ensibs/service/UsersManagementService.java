@@ -1,7 +1,7 @@
 package fr.ensibs.service;
 
 
-import fr.ensibs.database.entity.User;
+import fr.ensibs.model.User;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;

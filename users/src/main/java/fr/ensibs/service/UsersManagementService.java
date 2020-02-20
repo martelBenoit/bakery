@@ -13,7 +13,7 @@ import java.util.List;
  * @author Benoît Martel
  * @version 1.0
  */
-@WebService
+@WebService(name = "UsersManagementService")
 public interface UsersManagementService {
 
 

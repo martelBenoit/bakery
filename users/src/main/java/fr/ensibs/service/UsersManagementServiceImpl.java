@@ -98,4 +98,18 @@ public class UsersManagementServiceImpl implements UsersManagementService {
         }
         return null;
     }
+
+    public boolean userIsAdmin(String token) throws Exception{
+        try{
+            User user = userDAO.getUser(token);
+            if(user == null)
+                throw new Exception("The user doesn't exist !");
+            else
+                return user.getRole() == Role.admin;
+
+        }catch (Exception e){
+            throw new Exception("Error when searching in database : "+e.getMessage());
+        }
+
+    }
 }

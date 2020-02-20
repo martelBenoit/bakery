@@ -23,6 +23,8 @@ public interface UsersManagementService {
 
    User getUserFromToken(String token);
 
+   boolean userIsAdmin(String token) throws Exception;
+
 
    
 

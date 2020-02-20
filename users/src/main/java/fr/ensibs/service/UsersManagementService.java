@@ -11,15 +11,15 @@ import java.util.List;
 public interface UsersManagementService {
 
 
-   User register(@WebParam(name="login") String login, @WebParam(name="password") String password, @WebParam(name="role") String role);
+   User register(@WebParam(name="login") String login, @WebParam(name="password") String password, @WebParam(name="role") String role) throws Exception;
 
    boolean unregister(int id, String token);
 
-   List<User> getUsers(String token);
+   List<User> getUsers(String token) throws Exception;
 
-   String authentification(String name, String password);
+   String auth(String name, String password) throws Exception;
 
-   boolean deconnection(String token);
+   boolean disconnect(String token);
 
    User getUserFromToken(String token);
 

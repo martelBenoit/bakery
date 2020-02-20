@@ -14,7 +14,8 @@ public class ConnectionSQLite {
     private ConnectionSQLite() {
 
         URL url = ConnectionSQLite.class.getResource("/bdd.db");
-        String urlString = url.getPath()+"\\"+url.getFile();
+        String urlString = url.getPath();
+        System.out.println(urlString);
 
         try {
             Class.forName("org.sqlite.JDBC");

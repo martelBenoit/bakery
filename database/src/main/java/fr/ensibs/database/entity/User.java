@@ -1,6 +1,5 @@
 package fr.ensibs.database.entity;
 
-
 import fr.ensibs.database.util.Role;
 
 public class User {

@@ -15,7 +15,7 @@ public class UsersManagementServiceImpl implements UsersManagementService {
 
     UserDAO userDAO = new UserDAO();
 
-    public User register(String name, String password, String roleString) {
+    public User register(String login, String password, String roleString) throws Exception {
 
         Role role;
 
@@ -24,29 +24,32 @@ public class UsersManagementServiceImpl implements UsersManagementService {
         else if(roleString.equalsIgnoreCase("customer"))
             role = Role.customer;
         else
-            return null;
+            throw new Exception("The role not exist, please enter a valid role (`admin` or `customer`");
 
-
-        User user = new User(name,password,role);
-        try{
-            user = userDAO.addUser(user);
-        }catch(SQLException e){
-            e.printStackTrace();
-            return null;
-        }
-
+        User user = new User(login,password,role);
+        user = userDAO.addUser(user);
         return user;
+
     }
 
     public boolean unregister(int id, String token) {
         return false;
     }
 
-    public List<User> getUsers(String token) {
-        return null;
+    public List<User> getUsers(String token) throws Exception{
+        User user = getUserFromToken(token);
+        if(user != null && user.getRole() == Role.admin){
+            try{
+                return userDAO.getUsers();
+            }catch (SQLException e){
+               throw new Exception("Error when searching for users in the database");
+            }
+        }
+        else
+            throw new Exception("Your token is invalid for this command !");
     }
 
-    public String authentification(String login, String password) {
+    public String auth(String login, String password) throws Exception {
 
         User user;
         try{
@@ -56,16 +59,16 @@ public class UsersManagementServiceImpl implements UsersManagementService {
                 userDAO.updateUser(user);
                 return user.getToken();
             }
+            else
+                throw new Exception("Invalid login or password");
 
         }catch(SQLException e){
-            e.printStackTrace();
-            return "";
+            throw new Exception(e.getMessage());
         }
-        return "";
 
     }
 
-    public boolean deconnection(String token) {
+    public boolean disconnect(String token) {
         boolean ret = false;
         User user = getUserFromToken(token);
         if(user != null){

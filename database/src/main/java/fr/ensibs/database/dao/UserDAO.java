@@ -1,8 +1,8 @@
 package fr.ensibs.database.dao;
 
 
-import fr.ensibs.models.User;
-import fr.ensibs.util.Role;
+import fr.ensibs.database.entity.User;
+import fr.ensibs.database.util.Role;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,21 +18,51 @@ public class UserDAO {
     }
 
 
-    public User addUser(User user) throws SQLException {
-        String query = "INSERT INTO User(login,password,role) VALUES (?,?,?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setString(1,user.getLogin());
-        preparedStatement.setString(2,user.getPassword());
-        preparedStatement.setInt(3,user.getRole().ordinal());
-        int res = preparedStatement.executeUpdate();
+    public User addUser(User user) throws Exception {
 
-        if(res == 1){
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            rs.next();
-            user.setId(rs.getInt(1));
+        if(existUser(user.getLogin()) == null ){
+            String query = "INSERT INTO User(login,password,role) VALUES (?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1,user.getLogin());
+            preparedStatement.setString(2,user.getPassword());
+            preparedStatement.setInt(3,user.getRole().ordinal());
+            int res = preparedStatement.executeUpdate();
+
+            if(res == 1){
+                ResultSet rs = preparedStatement.getGeneratedKeys();
+                rs.next();
+                user.setId(rs.getInt(1));
+            }
+
+            return user;
+        }
+        else{
+            throw new Exception("This user already exist !");
         }
 
-        return user;
+
+    }
+
+    public User existUser(String login) throws SQLException {
+        String query = "SELECT id, login, password, token, role FROM User WHERE login = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1,login);
+        ResultSet res = preparedStatement.executeQuery();
+
+
+        if (!res.next()){
+            return null;
+        }
+        else {
+            User user = new User();
+            user.setId(res.getInt("id"));
+            user.setLogin(res.getString("login"));
+            user.setPassword(res.getString("password"));
+            user.setToken(res.getString("token"));
+            user.setRole(Role.of(res.getInt("role")));
+
+            return user;
+        }
 
     }
 

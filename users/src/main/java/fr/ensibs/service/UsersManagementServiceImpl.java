@@ -15,6 +15,9 @@ public class UsersManagementServiceImpl implements UsersManagementService {
 
     UserDAO userDAO = new UserDAO();
 
+    /**
+     * {@inheritDoc}
+     */
     public User register(String login, String password, String roleString) throws Exception {
 
         Role role;

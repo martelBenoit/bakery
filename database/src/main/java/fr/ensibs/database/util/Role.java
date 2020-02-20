@@ -1,5 +1,11 @@
 package fr.ensibs.database.util;
 
+/**
+ * Role enum.
+ *
+ * @author Benoît Martel
+ * @version 1.0
+ */
 public enum Role {
     admin(1),
     customer(0);

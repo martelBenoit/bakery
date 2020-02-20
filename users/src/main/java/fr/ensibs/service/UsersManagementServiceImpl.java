@@ -9,15 +9,25 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-
+/**
+ * UserManagementServiceImpl class. Implements UserManagementService interface.
+ *
+ * @author Benoît Martel
+ * @version 1.0
+ * @see UsersManagementService
+ */
 @WebService(endpointInterface = "fr.ensibs.service.UsersManagementService",serviceName = "UsersManagementService",portName = "UsersManagementPort")
 public class UsersManagementServiceImpl implements UsersManagementService {
 
+    /**
+     * the userDAO instance
+     */
     UserDAO userDAO = new UserDAO();
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public User register(String login, String password, String roleString) throws Exception {
 
         Role role;
@@ -35,10 +45,18 @@ public class UsersManagementServiceImpl implements UsersManagementService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean unregister(int id, String token) {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<User> getUsers(String token) throws Exception{
         User user = getUserFromToken(token);
         if(user != null && user.getRole() == Role.admin){
@@ -52,63 +70,62 @@ public class UsersManagementServiceImpl implements UsersManagementService {
             throw new Exception("Your token is invalid for this command !");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String auth(String login, String password) throws Exception {
 
-        User user;
-        try{
-            user = userDAO.getUser(login,password);
-            if(user != null){
-                user.setToken("USR-"+UUID.randomUUID().toString());
-                userDAO.updateUser(user);
-                return user.getToken();
-            }
-            else
-                throw new Exception("Invalid login or password");
+        User user = userDAO.getUser(login,password);
+        if(user == null)
+            throw new Exception("Invalid login or password");
 
-        }catch(SQLException e){
-            throw new Exception(e.getMessage());
-        }
+        user.setToken("USR-"+UUID.randomUUID().toString());
+        userDAO.updateUser(user);
+        return user.getToken();
 
     }
 
-    public boolean disconnect(String token) {
-        boolean ret = false;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean disconnect(String token) throws Exception {
+
         User user = getUserFromToken(token);
-        if(user != null){
-            user.setToken("");
-            try{
-                ret = userDAO.updateUser(user);
+        if(user == null)
+            throw new Exception("Unable to retrieve the user in database");
 
-            }catch(SQLException e){
-                System.out.println("Unable to disconnect the user");
-            }
+        user.setToken("");
+        return userDAO.updateUser(user);
 
-        }
-        return ret;
     }
 
-    public User getUserFromToken(String token) {
-        User user;
-        try{
-            user = userDAO.getUser(token);
-            if(user != null){
-                return user;
-            }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User getUserFromToken(String token) throws Exception {
 
-        }catch(SQLException e){
-            e.printStackTrace();
-            return null;
-        }
-        return null;
+        User user = userDAO.getUser(token);
+        if(user == null)
+            throw new Exception("The user with this token doesn't exist !");
+
+        return user;
+
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean userIsAdmin(String token) throws Exception{
         try{
             User user = userDAO.getUser(token);
             if(user == null)
                 throw new Exception("The user doesn't exist !");
-            else
-                return user.getRole() == Role.admin;
+
+            return user.getRole() == Role.admin;
 
         }catch (Exception e){
             throw new Exception("Error when searching in database : "+e.getMessage());

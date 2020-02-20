@@ -1,44 +1,70 @@
 package fr.ensibs.database.dao;
 
-import java.net.URL;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+/**
+ * ConnectionSQlite class.
+ * This class allows you to connect at the database embedded
+ *
+ * @author Yoann Le Dréan
+ * @author Benoît Martel
+ * @author Loïc Travaillé
+ * @version 1.0
+ */
 public class ConnectionSQLite {
 
+    /**
+     * the connection instance
+     */
     private static Connection connection = null;
-    private Statement statement = null;
 
+    /**
+     * the url for the database
+     */
+    private static String url = ConnectionSQLite.class.getResource("/bdd.db").getPath();
+
+    /**
+     * Private constructor.
+     */
     private ConnectionSQLite() {
-
-        URL url = ConnectionSQLite.class.getResource("/bdd.db");
-        String urlString = url.getPath();
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + urlString);
-            statement = connection.createStatement();
-            System.out.println("Connection at " + urlString + " successful");
-        } catch (ClassNotFoundException | SQLException notFoundException) {
-            notFoundException.printStackTrace();
-        }
 
     }
 
+    /**
+     * This method allows you to connect at the database.
+     */
+    private static void connect() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + url);
+            System.out.println("Connection at " + url + " successful");
+        } catch (ClassNotFoundException | SQLException notFoundException) {
+            notFoundException.printStackTrace();
+        }
+    }
+
+    /**
+     * This method allows you to close the connection to the database.
+     */
     public void close() {
         try {
             connection.close();
-            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static Connection getConnection(){
+    /**
+     * This method allows you to get the connection to the database.
+     *
+     * @return the connection
+     */
+    public static Connection getConnection() {
         if (connection == null) {
-            new ConnectionSQLite();
+            connect();
         }
         return connection;
     }

@@ -1,6 +1,5 @@
 package fr.ensibs.database.dao;
 
-
 import fr.ensibs.database.entity.User;
 import fr.ensibs.database.util.Role;
 
@@ -8,16 +7,34 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * UserDAO class.
+ *
+ * @author Benoît Martel
+ * @version 1.0
+ */
 public class UserDAO {
 
+    /**
+     * the connection instance.
+     */
     private Connection connection;
 
+    /**
+     * Constructor.
+     */
     public UserDAO(){
 
         this.connection = ConnectionSQLite.getConnection();
     }
 
-
+    /**
+     * This method allows you to add an user in the database.
+     *
+     * @param user the user to add.
+     * @return the user object with the auto increment id.
+     * @throws Exception throw an exception if the user already exist
+     */
     public User addUser(User user) throws Exception {
 
         if(existUser(user.getLogin()) == null ){
@@ -43,6 +60,13 @@ public class UserDAO {
 
     }
 
+    /**
+     * This method allows you to retrieve if an user exist with his login.
+     *
+     * @param login the login of the user
+     * @return the user if retrieved, else null
+     * @throws SQLException throw an SQLException if an exception was occurred
+     */
     public User existUser(String login) throws SQLException {
         String query = "SELECT id, login, password, token, role FROM User WHERE login = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -66,6 +90,14 @@ public class UserDAO {
 
     }
 
+    /**
+     * This method allows you to get an user from his login and his password.
+     *
+     * @param login the login of the user
+     * @param password the password of the user
+     * @return user if the user is retrieved, else null
+     * @throws SQLException throw an SQLException if an exception was occurred
+     */
     public User getUser(String login, String password) throws SQLException {
         String query = "SELECT id, login, password, token, role FROM User WHERE login = ? and password = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -90,6 +122,12 @@ public class UserDAO {
 
     }
 
+    /**
+     * This method allows you to get all users in the database.
+     *
+     * @return the list of users
+     * @throws SQLException throw an SQLException if an exception was occurred
+     */
     public List<User> getUsers() throws SQLException {
         String query = "SELECT id, login, password, token, role FROM User";
         Statement statement = connection.createStatement();
@@ -111,6 +149,13 @@ public class UserDAO {
 
     }
 
+    /**
+     * This method allows you to update an user.
+     *
+     * @param user the user to update
+     * @return true if the user has been correctly updated
+     * @throws SQLException throw an SQLException if an exception was occurred
+     */
     public boolean updateUser(User user) throws SQLException {
         String query = "UPDATE User set token = ? where id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -121,6 +166,13 @@ public class UserDAO {
         return res == 1;
     }
 
+    /**
+     * This method allows you to get an user from an token.
+     *
+     * @param token the token of an user
+     * @return the user or null
+     * @throws SQLException throw an SQLException if an exception was occurred
+     */
     public User getUser(String token) throws SQLException {
         String query = "SELECT id, login, password, token, role FROM User WHERE token = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);

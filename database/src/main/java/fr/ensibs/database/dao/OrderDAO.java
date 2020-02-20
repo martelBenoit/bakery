@@ -33,13 +33,33 @@ public class OrderDAO {
         preparedStatement.setString(1,userName);
         ResultSet res = preparedStatement.executeQuery(query);
 
-        List<Order> orders = new ArrayList<Order>();
+        List<Order> orders = new ArrayList<>();
         while(res.next()){
             orders.add(new Order(
                     res.getInt("id"),
                     res.getString("userName"),
                     res.getFloat("price"),
                     res.getBoolean("paid")
+                    )
+            );
+        }
+
+        return orders;
+
+    }
+
+    public List<Order> getAllOrders() throws SQLException {
+        String query = "SELECT id, userName, price, paid FROM Order";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet res = preparedStatement.executeQuery(query);
+
+        List<Order> orders = new ArrayList<>();
+        while(res.next()){
+            orders.add(new Order(
+                            res.getInt("id"),
+                            res.getString("userName"),
+                            res.getFloat("price"),
+                            res.getBoolean("paid")
                     )
             );
         }

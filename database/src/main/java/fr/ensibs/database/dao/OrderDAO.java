@@ -18,7 +18,7 @@ public class OrderDAO {
 
 
     public boolean addOrder(Order order) throws SQLException {
-        String query = "INSERT INTO Order(login_user,price,isPaid) VALUES (?,?,?)";
+        String query = "INSERT INTO OOrder(login_user,price,isPaid) VALUES (?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1,order.getUserName());
         preparedStatement.setFloat(2,order.getPrice());

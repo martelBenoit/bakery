@@ -30,13 +30,16 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
             if (user != null) {
                 OrderDAO dao = new OrderDAO();
                 float totalPrice = 0;
-                for (String product : products) {
-                    float price = getPriceOf(product);
-                    // If the product exists
-                    if(price != -1) {
-                        totalPrice += price;
+                if(products != null) {
+                    for (String product : products) {
+                        float price = getPriceOf(product);
+                        // If the product exists
+                        if (price != -1) {
+                            totalPrice += price;
+                        }
                     }
                 }
+                Order order = new Order(0, user.getLogin(), totalPrice, false);
                 dao.addOrder(new Order(0, user.getLogin(), totalPrice, false));
             }
         } catch (SQLException e) {

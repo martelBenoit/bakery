@@ -1,8 +1,29 @@
 package fr.ensibs.service;
 
+
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+/**
+ * Interface PaymentsManagementService.
+ *
+ * @author Loïc Travaillé
+ * @version 1.0
+ */
+@WebService(name = "PaymentsManagementService")
 public interface PaymentsManagementService {
 
-    void pay(int id, String token);
+    /**
+     * This method is used when a user pays his bill
+     *
+     * @param token the user token
+     */
+    void pay(@WebParam(name = "token") String token);
 
-    void getBill(int id, String token);
+    /**
+     * This method give the total bill of a user
+     *
+     * @param token the user token
+     */
+    void getBill(@WebParam(name = "token") String token);
 }

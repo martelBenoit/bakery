@@ -6,11 +6,13 @@ public class Product {
 
     private float price;
 
+    private int id;
+
     public Product() {
 
     }
 
-    public Product(String name, float price) {
+    public Product(int id, String name, float price) {
         this.name = name;
         this.price = price;
     }
@@ -29,5 +31,13 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

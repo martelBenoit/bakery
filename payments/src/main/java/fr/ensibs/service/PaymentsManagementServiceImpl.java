@@ -6,11 +6,6 @@ import java.util.List;
 @WebService(endpointInterface = "fr.ensibs.service.PaymentsManagementService", serviceName = "PaymentsManagementService", portName = "PaymentsManagementPort")
 public class PaymentsManagementServiceImpl implements PaymentsManagementService {
 
-    /**
-     * the payment price
-     */
-    private float price = 0;
-
     private OrdersManagementService ordersManagementService;
 
     /**
@@ -27,22 +22,24 @@ public class PaymentsManagementServiceImpl implements PaymentsManagementService 
     public void pay(String token) {
         List<Order> orders = ordersManagementService.getOrders(token);
         for (Order order : orders) {
-            ordersManagementService.setPaid(order.getId());
+            if (!order.isPaid()) {
+                ordersManagementService.setPaid(token, order.getId());
+            }
         }
-        this.price = 0;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void getBill(String token) {
+    public float getBill(String token) {
+        float price = 0;
         List<Order> orders = ordersManagementService.getOrders(token);
         for (Order order : orders) {
             if (!order.isPaid()) {
-                this.price = this.price + order.getPrice();
+                price = price + order.getPrice();
             }
         }
-        System.out.println("You need to pay " + this.price + "€");
+        return price;
     }
 }

@@ -45,4 +45,12 @@ public class ProductDAO {
         return products;
 
     }
+
+    public boolean checkProductExists(int id) throws SQLException {
+        String query = "SELECT id, name, price FROM Product WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, id);
+        ResultSet res = preparedStatement.executeQuery(query);
+        return res.next();
+    }
 }

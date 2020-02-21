@@ -26,27 +26,23 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
     }
 
     @Override
-    public boolean addOrder(String token, List<String> products) {
+    public boolean addOrder(String token, int id, int quantity) {
+        boolean ret = false;
         try {
             // check if the token is correct
             User user = usersManagementPort.getUserFromToken(token);
             if (user != null) {
-                float totalPrice = 0;
-                if (products != null) {
-                    for (String product : products) {
-                        float price = getPriceOf(token, product);
-                        // If the product exists
-                        if (price != -1) {
-                            totalPrice += price;
-                        }
-                    }
+                float price = getPriceOf(token, id, quantity);
+                // If the product exists
+                if (productDAO.checkProductExists(id)) {
+                    orderDAO.addOrder(new Order(0, user.getLogin(), price, false));
+                    ret = true;
                 }
-                return orderDAO.addOrder(new Order(0, user.getLogin(), totalPrice, false));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return ret;
     }
 
     /**
@@ -121,10 +117,10 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
         }
     }
 
-    private float getPriceOf(String token, String productName) {
+    private float getPriceOf(String token, int id, int quantity) {
         for (Product p : this.getMenu(token)) {
-            if (p.getName().equals(productName)) {
-                return p.getPrice();
+            if (p.getId() ==id) {
+                return p.getPrice()*quantity;
             }
         }
         return -1;

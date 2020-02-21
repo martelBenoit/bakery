@@ -10,7 +10,7 @@ import java.util.List;
 @WebService(name = "OrdersManagementService", targetNamespace = "http://fr.ensibs")
 public interface OrdersManagementService {
 
-    boolean addOrder(String token, List<String> products);
+    boolean addOrder(String token, int id, int quantity);
 
     List<Order> getOrders(String token);
 

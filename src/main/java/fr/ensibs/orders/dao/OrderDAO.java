@@ -54,15 +54,15 @@ public class OrderDAO {
     public List<Order> getAllOrders() throws SQLException {
         String query = "SELECT id, login_user, price, isPaid FROM OOrder";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ResultSet res = preparedStatement.executeQuery(query);
+        ResultSet res = preparedStatement.executeQuery();
 
         List<Order> orders = new ArrayList<>();
         while (res.next()) {
             orders.add(new Order(
                             res.getInt("id"),
-                            res.getString("userName"),
+                            res.getString("login_user"),
                             res.getFloat("price"),
-                            res.getBoolean("paid")
+                            res.getBoolean("isPaid")
                     )
             );
         }

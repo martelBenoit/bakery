@@ -24,6 +24,7 @@ public interface PaymentsManagementService {
      * This method give the total bill of a user
      *
      * @param token the user token
+     * @return the total user bill
      */
-    void getBill(@WebParam(name = "token") String token);
+    float getBill(@WebParam(name = "token") String token);
 }

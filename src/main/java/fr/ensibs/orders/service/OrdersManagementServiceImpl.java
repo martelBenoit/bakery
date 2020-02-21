@@ -32,23 +32,20 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
     /**
      * Order DAO, to perform actions on the order table
      */
-    private OrderDAO orderDAO;
+    private static final OrderDAO orderDAO = new OrderDAO();
+
 
     /**
      * Product DAO, to perform actions on the product table
      */
-    private ProductDAO productDAO;
+    private static final ProductDAO productDAO = new ProductDAO();
 
     /**
      * Constructor
      */
     public OrdersManagementServiceImpl() {
 
-        this.orderDAO = new OrderDAO();
-        this.productDAO = new ProductDAO();
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -63,7 +60,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
                 float price = ordersManagementService.getPriceOf(token, id, quantity);
                 // If the product exists
                 if (productDAO.checkProductExists(id)) {
-                    orderDAO.addOrder(new Order(0, user.getLogin(), price, false));
+                    orderDAO.addOrder(new Order(user.getLogin(), price, false));
                     ret = true;
                 }
             }
@@ -82,6 +79,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
         try {
             User user = usersManagementService.getUserFromToken(token);
             if (user != null) {
+                System.out.println(user.getLogin());
                 ret = orderDAO.getOrders(user.getLogin());
             }
         } catch (Exception e) {
@@ -116,6 +114,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
         try {
             if (usersManagementService.getUserFromToken(token) != null) {
                 ret = productDAO.getProducts();
+                System.out.println(ret.get(0).getId());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -164,7 +163,8 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
      * @return The total price
      */
     private float getPriceOf(String token, int id, int quantity) {
-        for (Product p : this.getMenu(token)) {
+        for (Product p : ordersManagementService.getMenu(token)) {
+            System.out.println(p.getName()+" "+p.getPrice()+" "+p.getId());
             if (p.getId() == id) {
                 return p.getPrice() * quantity;
             }

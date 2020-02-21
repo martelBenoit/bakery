@@ -31,6 +31,10 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
@@ -63,6 +67,8 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.30.1</version>
         </dependency>
+
+
     </dependencies>
 
 

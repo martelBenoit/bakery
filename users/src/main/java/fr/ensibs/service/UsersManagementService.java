@@ -5,6 +5,7 @@ import fr.ensibs.model.User;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
+
 import java.util.List;
 
 /**

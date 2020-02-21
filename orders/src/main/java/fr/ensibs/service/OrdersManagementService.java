@@ -4,6 +4,7 @@ import fr.ensibs.model.Order;
 import fr.ensibs.model.Product;
 
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.List;
 

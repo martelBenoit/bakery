@@ -11,8 +11,43 @@
 
     <artifactId>orders</artifactId>
 
+    <packaging>${project.packaging}</packaging>
+
+    <properties>
+        <maven.compiler.version>3.1</maven.compiler.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>jar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <project.packaging>jar</project.packaging>
+            </properties>
+        </profile>
+        <profile>
+            <id>war</id>
+            <properties>
+                <project.packaging>war</project.packaging>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <finalName>ws_orders</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.sun.xml.ws</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
@@ -27,7 +62,7 @@
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
                             <keep>true</keep>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:9991/ws/UsersManagementService?wsdl</wsdlUrl>
+                                <wsdlUrl>http://localhost:9001/ws/UsersManagementService?wsdl</wsdlUrl>
                             </wsdlUrls>
                         </configuration>
                     </execution>

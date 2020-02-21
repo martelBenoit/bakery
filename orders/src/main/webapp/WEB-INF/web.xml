@@ -4,19 +4,19 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <display-name>usersManagementService</display-name>
+    <display-name>ordersServices</display-name>
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
     <servlet>
-        <display-name>usersManagementService</display-name>
-        <servlet-name>usersManagementService</servlet-name>
+        <display-name>ordersManagementService</display-name>
+        <servlet-name>ordersManagementService</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>usersManagementService</servlet-name>
-        <url-pattern>/usersManagementService</url-pattern>
+        <servlet-name>ordersManagementService</servlet-name>
+        <url-pattern>/ordersManagementService</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>60</session-timeout>

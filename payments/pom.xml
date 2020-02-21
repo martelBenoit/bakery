@@ -65,7 +65,7 @@
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
                             <keep>true</keep>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:9002/ws/OrdersManagementService?wsdl</wsdlUrl>
+                                <wsdlUrl>http://localhost:8080/ws_orders/OrdersManagementService?wsdl</wsdlUrl>
                             </wsdlUrls>
                         </configuration>
                     </execution>

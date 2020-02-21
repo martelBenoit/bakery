@@ -11,8 +11,8 @@
 
     <modules>
         <module>users</module>
-        <module>payments</module>
         <module>orders</module>
+        <module>payments</module>
     </modules>
 
     <properties>

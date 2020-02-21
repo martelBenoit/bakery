@@ -62,7 +62,7 @@
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
                             <keep>true</keep>
                             <wsdlUrls>
-                                <wsdlUrl>http://localhost:9001/ws/UsersManagementService?wsdl</wsdlUrl>
+                                <wsdlUrl>http://localhost:8080/ws/UsersManagementService?wsdl</wsdlUrl>
                             </wsdlUrls>
                         </configuration>
                     </execution>

@@ -1,0 +1,6 @@
+fr.ensibs.orders.model
+fr.ensibs.orders.service
+fr.ensibs.payments.service
+fr.ensibs.users.model
+fr.ensibs.users.service
+fr.ensibs.users.util

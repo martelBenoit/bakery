@@ -19,14 +19,14 @@ import java.util.UUID;
 @WebService(endpointInterface = "fr.ensibs.users.service.UsersManagementService", serviceName = "UsersManagementService", portName = "UsersManagementPort")
 public class UsersManagementServiceImpl implements UsersManagementService {
 
-    private static final UsersManagementService usersManagementService = new UsersManagementServiceImpl();
+    private static final UsersManagementServiceImpl usersManagementService = new UsersManagementServiceImpl();
 
     public UsersManagementServiceImpl(){
     }
 
 
     public static final UsersManagementServiceImpl getInstance(){
-        return (UsersManagementServiceImpl) usersManagementService;
+        return usersManagementService;
     }
 
     /**

@@ -12,6 +12,12 @@ public class Order {
     public Order() {
     }
 
+    public Order(String userName, float price, boolean paid) {
+        this.userName = userName;
+        this.price = price;
+        this.paid = paid;
+    }
+
     public Order(int id, String userName, float price, boolean paid) {
         this.id = id;
         this.userName = userName;

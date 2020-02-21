@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
+    <endpoint name='usersManagementService'
+              implementation='fr.ensibs.users.service.UsersManagementServiceImpl'
+              url-pattern='/usersManagementService'/>
+    <endpoint name='ordersManagementService'
+              implementation='fr.ensibs.orders.service.OrdersManagementServiceImpl'
+              url-pattern='/ordersManagementService'/>
+    <endpoint name='paymentsManagementService'
+              implementation='fr.ensibs.payments.service.PaymentsManagementServiceImpl'
+              url-pattern='/paymentsManagementService'/>
+
+</endpoints>

@@ -1,6 +1,7 @@
 package fr.ensibs.service;
 
 import fr.ensibs.dao.OrderDAO;
+import fr.ensibs.dao.ProductDAO;
 import fr.ensibs.model.Order;
 import fr.ensibs.model.Product;
 
@@ -14,31 +15,35 @@ import java.util.List;
 public class OrdersManagementServiceImpl implements OrdersManagementService {
 
     protected UsersManagementService usersManagementPort;
+    private OrderDAO orderDAO;
+    private ProductDAO productDAO;
 
     public OrdersManagementServiceImpl() {
         UsersManagementService_Service usersManagementService = new UsersManagementService_Service();
         usersManagementPort = usersManagementService.getUsersManagementPort();
+        this.orderDAO = new OrderDAO();
+        this.productDAO = new ProductDAO();
     }
 
+    @Override
     public boolean addOrder(String token, List<String> products) {
         try {
             // check if the token is correct
             User user = usersManagementPort.getUserFromToken(token);
             if (user != null) {
-                OrderDAO dao = new OrderDAO();
                 float totalPrice = 0;
                 if (products != null) {
                     for (String product : products) {
-                        float price = getPriceOf(product);
+                        float price = getPriceOf(token, product);
                         // If the product exists
                         if (price != -1) {
                             totalPrice += price;
                         }
                     }
                 }
-                return dao.addOrder(new Order(0, user.getLogin(), totalPrice, false));
+                return orderDAO.addOrder(new Order(0, user.getLogin(), totalPrice, false));
             }
-        } catch (SQLException | Exception_Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
@@ -50,20 +55,16 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
      * @param token The token of the user
      * @return The list of the user's orders
      */
+    @Override
     public List<Order> getOrders(String token) {
         List<Order> ret = new ArrayList<>();
-        try {
-            User user = usersManagementPort.getUserFromToken(token);
-            if (user != null) {
-                try {
-                    OrderDAO dao = new OrderDAO();
-                    ret = dao.getOrders(user.getLogin());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        User user = usersManagementPort.getUserFromToken(token);
+        if (user != null) {
+            try {
+                ret = orderDAO.getOrders(user.getLogin());
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (Exception_Exception e) {
-            System.out.println(e.getMessage());
         }
         return ret;
     }
@@ -74,13 +75,13 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
      * @param token The token of the admin
      * @return The list of all the orders
      */
+    @Override
     public List<Order> getAllOrders(String token) {
 
         List<Order> ret = new ArrayList<>();
         try {
             if (usersManagementPort.userIsAdmin(token)) {
-                OrderDAO dao = new OrderDAO();
-                ret = dao.getAllOrders();
+                ret = orderDAO.getAllOrders();
             }
         } catch (SQLException | Exception_Exception e) {
             e.printStackTrace();
@@ -88,22 +89,41 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
         return ret;
     }
 
-    public ArrayList<Product> getMenu() {
-        ArrayList<Product> menu = new ArrayList<>();
-        menu.add(new Product("Pain au chocolat", 0.9f));
-        menu.add(new Product("Croissant", 0.8f));
-        menu.add(new Product("Pain aux raisins", 1f));
-        return menu;
+    @Override
+    public List<Product> getMenu(String token) {
+        List<Product> ret = new ArrayList<>();
+        try {
+            if(usersManagementPort.getUserFromToken(token) != null) {
+                ret = productDAO.getProducts();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ret;
     }
 
-    public void setPaid(int id) {
-        OrderDAO dao = new OrderDAO();
-        dao.setPaid(id);
+    @Override
+    public void setPaid(String token, int id) {
+        if(usersManagementPort.getUserFromToken(token) != null) {
+            OrderDAO dao = new OrderDAO();
+            dao.setPaid(id);
+        }
     }
 
-    private float getPriceOf(String name) {
-        for (Product p : this.getMenu()) {
-            if (p.getName().equals(name)) {
+    @Override
+    public void addProduct(String token, String name, float price) {
+        try {
+            if(usersManagementPort.getUserFromToken(token) != null) {
+                productDAO.addProduct(new Product(0, name, price));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private float getPriceOf(String token, String productName) {
+        for (Product p : this.getMenu(token)) {
+            if (p.getName().equals(productName)) {
                 return p.getPrice();
             }
         }

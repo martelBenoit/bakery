@@ -14,9 +14,11 @@ public interface OrdersManagementService {
 
     List<Order> getOrders(String token);
 
-    ArrayList<Product> getMenu();
+    List<Order> getAllOrders(String token);
 
-    void setPaid(int id);
+    List<Product> getMenu(String token);
 
+    void setPaid(String token, int id);
 
+   void addProduct(String token, String name, float price);
 }

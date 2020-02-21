@@ -31,7 +31,7 @@ public class ProductDAO {
     public List<Product> getProducts() throws SQLException {
         String query = "SELECT id, name, price FROM Product";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ResultSet res = preparedStatement.executeQuery(query);
+        ResultSet res = preparedStatement.executeQuery();
 
         List<Product> products = new ArrayList<>();
         while (res.next()) {

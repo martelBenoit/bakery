@@ -10,16 +10,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ProductDAO class.
+ *
+ * @author Yoann Le Dréan
+ * @version 1.0
+ */
 public class ProductDAO {
 
+    /**
+     * the connection instance.
+     */
     private Connection connection;
 
+    /**
+     * Constructor.
+     */
     public ProductDAO() {
 
         this.connection = ConnectionSQLite.getConnection();
     }
 
-
+    /**
+     * This method allows you to add a product in the database.
+     *
+     * @param product the product to add.
+     * @throws Exception throw an exception if the product already exists
+     */
     public void addProduct(Product product) throws SQLException {
         String query = "INSERT INTO Product(name,price) VALUES (?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -48,6 +65,13 @@ public class ProductDAO {
 
     }
 
+    /**
+     * This method checks if a product exists in the database
+     *
+     * @param id The id of the product to check
+     * @return true if the product exists
+     * @throws SQLException throw an SQLException if an exception was occurred
+     */
     public boolean checkProductExists(int id) throws SQLException {
         String query = "SELECT id, name, price FROM Product WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);

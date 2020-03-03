@@ -60,7 +60,7 @@ public class User {
     }
 
     /**
-     * Constructor of the user class with onlu login, password and role parameters.
+     * Constructor of the user class with only login, password and role parameters.
      *
      * @param login    the user login
      * @param password the user password

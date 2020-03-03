@@ -2,10 +2,18 @@ package fr.ensibs.payments.service;
 
 import fr.ensibs.orders.model.Order;
 import fr.ensibs.orders.service.OrdersManagementServiceImpl;
+import fr.ensibs.users.service.UsersManagementService;
 
 import javax.jws.WebService;
 import java.util.List;
 
+/**
+ * PaymentsManagementServiceImpl class implements PaymentsManagementService interface.
+ *
+ * @author Loïc Travaillé
+ * @version 1.0
+ * @see PaymentsManagementService
+ */
 @WebService(endpointInterface = "fr.ensibs.payments.service.PaymentsManagementService", serviceName = "PaymentsManagementService", portName = "PaymentsManagementPort")
 public class PaymentsManagementServiceImpl implements PaymentsManagementService {
 

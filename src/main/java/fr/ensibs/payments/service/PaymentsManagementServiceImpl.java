@@ -2,7 +2,6 @@ package fr.ensibs.payments.service;
 
 import fr.ensibs.orders.model.Order;
 import fr.ensibs.orders.service.OrdersManagementServiceImpl;
-import fr.ensibs.users.service.UsersManagementService;
 
 import javax.jws.WebService;
 import java.util.List;

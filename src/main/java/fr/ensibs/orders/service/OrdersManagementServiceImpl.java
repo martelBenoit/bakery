@@ -56,7 +56,7 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
         try {
             // check if the token is correct
             User user = usersManagementService.getUserFromToken(token);
-            if (user != null) {
+            if (user != null && !usersManagementService.userIsAdmin(token)) {
                 float price = ordersManagementService.getPriceOf(token, id, quantity);
                 // If the product exists
                 if (productDAO.checkProductExists(id)) {
